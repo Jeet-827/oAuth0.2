@@ -7,18 +7,18 @@ const createToken = (req, res) => {
             return res.status(401).json({ message: "Please login" });
         }
 
-        const decode = jwt.verify(tokenHeader, process.env.JWT_SECRETE);
+        const decode = jwt.verify(tokenHeader, process.env.JWT_SECRET);
         if (!decode) {
             return res.status(401).json({ message: "User not found" });
         }
 
         const userId = decode.userId; 
 
-        const accessToken = jwt.sign({ userId }, process.env.JWT_SECRETE, {
+        const accessToken = jwt.sign({ userId }, process.env.JWT_SECRET, {
             expiresIn: "15m",
         });
 
-        const refreshToken = jwt.sign({ userId }, process.env.JWT_SECRETE, {
+        const refreshToken = jwt.sign({ userId }, process.env.JWT_SECRET, {
             expiresIn: "7d",
         });
 

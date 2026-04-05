@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setToken } from '../../redux/slicesh/tokenSplice';
+import { setToken } from '../../redux/slices/tokenSlice';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 

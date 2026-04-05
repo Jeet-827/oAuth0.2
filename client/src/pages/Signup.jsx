@@ -4,7 +4,7 @@ import axios from "axios"
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { setToken } from '../../redux/slicesh/tokenSplice';
+import { setToken } from '../../redux/slices/tokenSlice';
 
 const Signup = () => {
 

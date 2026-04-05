@@ -27,13 +27,13 @@ export const RegisterUser = async (req, res) => {
 
         const accessToken = jwt.sign(
             { userId },
-            process.env.JWT_SECRETE,
+            process.env.JWT_SECRET,
             { expiresIn: "15m" }
         );
 
         const refreshToken = jwt.sign(
             { userId },
-            process.env.JWT_SECRETE,
+            process.env.JWT_SECRET,
             { expiresIn: "7d" }
         );
 
@@ -77,13 +77,13 @@ export const LoginUser = async (req, res) => {
 
         const accessToken = jwt.sign(
             { userId },
-            process.env.JWT_SECRETE,
+            process.env.JWT_SECRET,
             { expiresIn: "15m" }
         );
 
         const refreshToken = jwt.sign(
             { userId },
-            process.env.JWT_SECRETE,
+            process.env.JWT_SECRET,
             { expiresIn: "7d" }
         );
 

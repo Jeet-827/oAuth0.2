@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
-import userReducer from "./slicesh/tokenSplice"
+import userReducer from "./slices/tokenSlice"
 const store = configureStore({
     reducer: {
         user: userReducer

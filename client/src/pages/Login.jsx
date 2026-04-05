@@ -2,7 +2,7 @@ import axios from 'axios';
 import React from 'react';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { setToken } from '../../redux/slicesh/tokenSplice';
+import { setToken } from '../../redux/slices/tokenSlice';
 import { useDispatch } from 'react-redux';
 
 const Login = () => {

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { verify } from "../middleware/verift.js";
+import { verify } from "../middleware/verify.js";
 import { sendProfile } from "../controller/profile.controller.js";
 const route = Router()
 
