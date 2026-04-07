@@ -1,6 +1,6 @@
-import userModle from "../model/userSchema.js";
+import User from "../model/user.model.js";
 
-export const sendProfile = async (req, res) => {
+export const getProfile = async (req, res) => {
     try {
         const userId = req.userId;
 
@@ -8,7 +8,7 @@ export const sendProfile = async (req, res) => {
             return res.status(401).json({ message: "Unauthorized" });
         }
 
-        const user = await userModle.findById(userId);
+        const user = await User.findById(userId);
 
         if (!user) {
             return res.status(404).json({ message: "User not found" });

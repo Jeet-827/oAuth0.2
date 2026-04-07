@@ -12,7 +12,7 @@ const Login = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const FormHandle = async (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
 
     const formData = { email, password };
@@ -44,7 +44,7 @@ const Login = () => {
             Please sign in to your account
           </p>
         </div>
-        <form className="mt-8 space-y-6" onSubmit={FormHandle}>
+        <form className="mt-8 space-y-6" onSubmit={handleFormSubmit}>
           <div className="space-y-4">
             <div>
               <label htmlFor="email-address" className="block text-sm font-medium text-gray-700">

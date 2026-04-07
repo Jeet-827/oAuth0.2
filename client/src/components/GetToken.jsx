@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { setUserInfo } from '../../redux/slices/userSlice';
 import { setToken } from '../../redux/slices/tokenSlice';
 import Cookies from 'js-cookie';
 import axios from 'axios';
@@ -31,6 +32,7 @@ const GetToken = () => {
 
                 if (res.data.accessToken) {
                     dispatch(setToken(res.data.accessToken));
+                    dispatch(setUserInfo(res.data.user));
                 }
             } catch (err) {
                 console.error(err);

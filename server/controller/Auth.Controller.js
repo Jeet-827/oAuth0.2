@@ -1,23 +1,23 @@
-import userModle from "../model/userSchema.js";
-import jwt from "jsonwebtoken"
-import bcrypt from "bcrypt"
+import User from "../model/user.model.js";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
 
 
-export const RegisterUser = async (req, res) => {
+export const registerUser = async (req, res) => {
     try {
         const { username, email, password } = req.body;
 
-        const ExistUser = await userModle.findOne({
+        const existUser = await User.findOne({
             $or: [{ username }, { email }]
         });
 
-        if (ExistUser) {
+        if (existUser) {
             return res.status(400).json({ message: "User already exists" });
         }
 
         const hash = await bcrypt.hash(password, 10);
 
-        const user = await userModle.create({
+        const user = await User.create({
             username,
             email,
             password: hash
@@ -55,25 +55,25 @@ export const RegisterUser = async (req, res) => {
 };
 
 
-export const LoginUser = async (req, res) => {
+export const loginUser = async (req, res) => {
     try {
         const { username, email, password } = req.body;
 
-        const FindUser = await userModle.findOne({
+        const findUser = await User.findOne({
             $or: [{ username }, { email }]
         });
 
-        if (!FindUser) {
+        if (!findUser) {
             return res.status(400).json({ message: "User not found" });
         }
 
-        const matchPass = await bcrypt.compare(password, FindUser.password);
+        const matchPass = await bcrypt.compare(password, findUser.password);
 
         if (!matchPass) {
             return res.status(400).json({ message: "Invalid password" });
         }
 
-        const userId = FindUser._id;
+        const userId = findUser._id;
 
         const accessToken = jwt.sign(
             { userId },
@@ -90,13 +90,13 @@ export const LoginUser = async (req, res) => {
         res.cookie("refreshToken", refreshToken, {
             httpOnly: false,
             secure: true,
-            maxAge: 7 * 24 * 60 * 60 * 1000, 
+            maxAge: 7 * 24 * 60 * 60 * 1000,
         });
 
         res.status(200).json({
             message: "Login successful",
             accessToken,
-            user: FindUser
+            user: findUser
         });
 
     } catch (error) {

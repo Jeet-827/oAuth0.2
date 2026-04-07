@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const userSChema = mongoose.Schema({
+const userSchema = mongoose.Schema({
     username: {
         type: String,
         required: true,
@@ -21,9 +21,7 @@ const userSChema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "post"
     }],
-
-
 })
 
-const userModle = mongoose.model('user', userSChema)
-export default userModle
+const User = mongoose.model('user', userSchema)
+export default User

@@ -3,6 +3,7 @@ import axios from "axios"
 import { useSelector, useDispatch } from 'react-redux'
 import { setToken } from '../../redux/slices/tokenSlice'
 import { useNavigate } from 'react-router-dom'
+import { setUserInfo } from '../../redux/slices/userSlice'
 
 const Home = () => {
     const token = useSelector((state) => state.user.token)
@@ -22,6 +23,7 @@ const Home = () => {
                 }
             })
             setUser(res.data.user)
+            dispatch(setUserInfo(res.data.user))
         } catch (error) {
             console.error("Failed to fetch profile", error)
         } finally {

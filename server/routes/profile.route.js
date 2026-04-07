@@ -1,8 +1,8 @@
 import { Router } from "express";
 import { verify } from "../middleware/verify.js";
-import { sendProfile } from "../controller/profile.controller.js";
-const route = Router()
+import { getProfile } from "../controller/profile.controller.js";
+const route = Router();
 
-route.get('/profile', verify, sendProfile)
+route.get('/profile', verify, getProfile);
 
-export default route
+export default route;

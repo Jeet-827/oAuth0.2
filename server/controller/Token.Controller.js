@@ -1,18 +1,24 @@
 import jwt from "jsonwebtoken";
+import User from "../model/user.model.js";
 
-const createToken = (req, res) => {
+const createToken = async (req, res) => {
     try {
-        const tokenHeader = req.headers.authorization?.split(" ")[1];
-        if (!tokenHeader) {
+        const tokenHeader = req.headers.authorization;
+
+        if (!tokenHeader || !tokenHeader.startsWith("Bearer ")) {
             return res.status(401).json({ message: "Please login" });
         }
 
-        const decode = jwt.verify(tokenHeader, process.env.JWT_SECRET);
-        if (!decode) {
-            return res.status(401).json({ message: "User not found" });
-        }
+        const token = tokenHeader.split(" ")[1];
 
-        const userId = decode.userId; 
+        const decode = jwt.verify(token, process.env.JWT_SECRET);
+
+        const userId = decode.userId;
+
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(400).json({ message: "User not found" });
+        }
 
         const accessToken = jwt.sign({ userId }, process.env.JWT_SECRET, {
             expiresIn: "15m",
@@ -23,8 +29,8 @@ const createToken = (req, res) => {
         });
 
         res.cookie("refreshToken", refreshToken, {
-            httpOnly: false, 
-            secure: false,  
+            httpOnly: true,
+            secure: false,
             sameSite: "lax",
             maxAge: 7 * 24 * 60 * 60 * 1000,
         });
@@ -32,10 +38,12 @@ const createToken = (req, res) => {
         res.status(200).json({
             message: "Token created",
             accessToken,
+            user,
         });
+
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: "Something wrong" });
+        res.status(500).json({ message: "Something went wrong" });
     }
 };
 

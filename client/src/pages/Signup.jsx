@@ -43,7 +43,7 @@ const Signup = () => {
             Join us today and get started
           </p>
         </div>
-        <form className="mt-8 space-y-6" onSubmit={FormHandle}>
+        <form className="mt-8 space-y-6" onSubmit={handleFormSubmit}>
           <div className="space-y-4">
             <div>
               <label htmlFor="full-name" className="block text-sm font-medium text-gray-700">
