@@ -1,15 +1,51 @@
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
+import userModel from "../model/UserSchema.js";
 
 passport.use(
-    new GoogleStrategy({
-        clientID: process.env.CLIENTID,
-        clientSecret: process.env.CLIENTSECRET,
-        callbackURL: process.env.CALLBACKURL,
-    }, (accessToken, refreshToken, profile, done) => {
-        console.log(profile);
-        return done(null, profile);
-    })
-)
+    new GoogleStrategy(
+        {
+            clientID: process.env.CLIENTID,
+            clientSecret: process.env.CLIENTSECRET,
+            callbackURL: process.env.CALLBACKURL,
+        },
+        async (accessToken, refreshToken, profile, done) => {
+            try {
+                let user = await userModel.findOne({ googleId: profile.id });
 
-export default passport
+
+                if (user) {
+                    return done(null, user);
+                }
+
+                const email = profile.emails?.[0]?.value;
+
+                if (email) {
+                    user = await userModel.findOne({ email });
+
+                    if (user) {
+
+                        user.googleId = profile.id;
+                        await user.save();
+
+                        return done(null, user);
+                    }
+                }
+
+
+                user = await userModel.create({
+                    username: profile.displayName,
+                    email,
+                    googleId: profile.id,
+                });
+
+                return done(null, user);
+
+            } catch (error) {
+                return done(error, null);
+            }
+        }
+    )
+);
+
+export default passport;
