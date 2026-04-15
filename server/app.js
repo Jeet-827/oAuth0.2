@@ -3,11 +3,20 @@ import express from 'express'
 import AuthRouter from "./routes/auth.route.js"
 import passport from './config/Google.config.js'
 import connect from "./config/Mongodb.config.js"
-
+import cors from "cors"
 const app = express()
+
+app.use(
+    cors({
+        origin: "http://localhost:5173",
+        credentials: true,
+    })
+);
+
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 connect()
+
 app.use(passport.initialize())
 app.set("views", "./views")
 app.set("view engine", "ejs")
