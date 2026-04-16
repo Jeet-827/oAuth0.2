@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import axios from "axios"
 import { useState } from 'react';
-
+import { useSearchParams } from 'react-router-dom';
 const Signup = () => {
   const [username, setUsername] = useState("")
   const [email, setEmail] = useState("")
@@ -27,6 +27,10 @@ const Signup = () => {
 
   const handleGoogleSignup = () => {
     window.location.href = "http://localhost:3000/api/auth/google";
+
+    const perams = new useSearchParams(window.location.search)
+    const token = perams.get("accesstoken")
+    localStorage.setItem("token", token )
   };
 
   return (
