@@ -33,6 +33,15 @@ passport.use(
                 }
 
 
+
+                const existingUsername = await userModel.findOne({ username: profile.displayName });
+                if (existingUsername) {
+
+                    existingUsername.googleId = profile.id;
+                    await existingUsername.save();
+                    return done(null, existingUsername);
+                }
+
                 user = await userModel.create({
                     username: profile.displayName,
                     email,
