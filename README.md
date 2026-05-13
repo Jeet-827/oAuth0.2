@@ -463,5 +463,3 @@ http://localhost:3000/api/auth/google/callback
 | `vite`              | ^7.2.4    | Frontend build tool & dev server|
 
 ---
-
-*Documentation generated for the `auth-yt` project — Jeet-827/oAuth0.2*
